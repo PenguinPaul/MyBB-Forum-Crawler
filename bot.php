@@ -46,12 +46,13 @@ function urlLooper($url)
 	$finalUrlArray[] = SITEURL;
 	foreach($urlArray as $value)
 	{
+		//make relative links the full path
 		$pos = strpos($value, "http://");
-		
 		if ($pos === false) {
 			$value = SITEURL."/".$value;
 		}
-
+		
+		//add to the array
 		$finalUrlArray[] = $value;
 	}
 
@@ -65,12 +66,17 @@ function getUrl()
 	global $ua,$burl;
 	
 	shuffle($ua);
+	//output the link we're looking at ATM
 	echo $ua[0]."<br />";
+	
+	//is this URL internal?  We don't want to go to external links.
 	$pos = strpos($ua[0], SITEURL);
 	
 	if ($pos === false) {
+		//external, get another one
 	    $burl = getUrl();
 	} else {
+		//internal, return
 	    return $ua[0];
 	}
 }

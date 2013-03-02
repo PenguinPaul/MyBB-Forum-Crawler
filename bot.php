@@ -24,6 +24,8 @@ if(isset($_GET['url']))
 	$url = file_get_contents("currenturl.txt");
 }
 
+$forbidden = "editpost.php,managegroup.php,modcp.php,moderation.php,newreply.php,newthread.php,polls.php,printthread.php,private.php,ratethread.php,report.php,reputation.php,sendthread.php,usercp.php,warnings.php";
+
 //get all the links on the page
 function urlLooper($url)
 {
@@ -69,6 +71,13 @@ function getUrl()
 	//output the link we're looking at ATM
 	echo $ua[0]."<br />";
 	
+	$forbidden = explode(",", $forbidden);
+	if(in_array($ua[0], $forbidden))
+	{
+		//forbidden, get annother one
+		$burl = getUrl();
+	}
+
 	//is this URL internal?  We don't want to go to external links.
 	$pos = strpos($ua[0], SITEURL);
 	
